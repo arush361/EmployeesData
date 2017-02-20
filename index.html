@@ -1,0 +1,21 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-touch.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-animate.js"></script>
+    <script src="http://ui-grid.info/release/ui-grid-unstable.js"></script>
+    <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid-unstable.css" type="text/css">
+    <link rel="stylesheet" href="styles/main.css" type="text/css">
+  </head>
+  <body>
+
+    <div ng-controller="MainCtrl">
+      <div>
+          <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav  class="grid"></div>
+      </div>
+
+    <script src="app.js"></script>
+    <script src="MockData/contents.js"></script>
+  </body>
+</html>
