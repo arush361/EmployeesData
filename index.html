@@ -11,8 +11,11 @@
   <body>
 
     <div ng-controller="MainCtrl">
-      <div>
-          <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav  class="grid"></div>
+
+      <div><br><label> 
+        <input type="text" class="form-control filter" size="25" ng-change="filter()" placeholder="Enter Name or City" ng-model="filterValue">
+        <br>
+        <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav  class="grid"></div>
       </div>
 
     <script src="app.js"></script>

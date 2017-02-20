@@ -1,7 +1,9 @@
 .grid {
 	height: 250;
 	width: 900px;
-	margin-left: auto;
-	margin-top: 100px;
-	margin-right: auto;
+	margin: 15px 250px;
+}
+
+.filter {
+	margin: 15px 250px;
 }
