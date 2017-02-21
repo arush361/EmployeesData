@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h3>Add Employee<h3>
+</div>
+<div class="modal-body">
+    <form name="emp" novalidate>
+	    Name:<br>
+	    <input type="text" name="name" ng-model="name" required ng-minlength="4"><br>
+	    <p class="alert" ng-show="emp.name.$dirty && emp.name.$invalid">Enter more than 3 characters</p>
+	    Phone:<br>
+	    <input type="text" name="phone" ng-model="phone" required ng-pattern="/^(\d)+$/" ><br>
+	    <p class="alert" ng-show="emp.phone.$error.pattern">Numbers only, please.</p> 
+	    City:<br>
+	    <input type="text" ng-model="city"><br>
+	    Address 1:<br>
+	    <input type="text" ng-model="addr1"><br>
+	    Address 2:<br>
+	    <input type="text" ng-model="addr2"><br>
+	    Postal code:<br>
+	    <input type="text" ng-model="postalCode"><br>
+	   
+  </form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-disabled="emp.$invalid" ng-click="addEmployee(name,phone,city,addr1,addr2,postalCode)">Save</button>
+	<button class="btn btn-secondary" ng-click="cancel()">Cancel</button>
+</div>

@@ -1,7 +1,19 @@
-var app = angular.module('app', ['ui.grid', 'ui.grid.cellNav']);
+var app = angular.module('app', ['ui.grid', 'ui.bootstrap', 'ngRoute']);
 
-app.controller('MainCtrl',  ['$scope', '$http', '$timeout', '$interval', 'Contents', '$filter',
- function ($scope, $http, $timeout, $interval, Contents, $filter) {
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/employees", {
+        templateUrl : 'employees.html',
+        controller: 'MainCtrl'
+    })
+    
+    .otherwise({
+      redirectTo: '/employees'
+    });
+});
+
+app.controller('MainCtrl',  ['$scope', '$http', '$timeout', '$interval', 'Contents', '$filter', '$modal',
+ function ($scope, $http, $timeout, $interval, Contents, $filter, $modal) {
   
   var data = Contents;
   $scope.gridOptions = {};
@@ -13,47 +25,54 @@ app.controller('MainCtrl',  ['$scope', '$http', '$timeout', '$interval', 'Conten
   });
 
   
-     $scope.gridOptions = {
-        enableFiltering: false,
-        onRegisterApi: function(gridApi){
-          $scope.gridApi = gridApi;
-          $scope.gridApi.grid.registerRowsProcessor( $scope.singleFilter, 200 );
-      },
-      columnDefs: [
-          { field:'id', displayName: 'Id'},    
-          { field:'name', displayName: 'Name'},
-          { field:'phone', displayName: 'Phone'},
-          { field:'address.city', displayName: 'City'},
-          { field:'address.address_line1', displayName: 'Address 1'},
-          { field:'address.address_line2', displayName: 'Address 2'},
-          { field:'address.postal_code', displayName: 'Postal Code'}
-      ]
-    };
+  $scope.gridOptions = {
+    enableFiltering: false,
+    onRegisterApi: function(gridApi){
+      $scope.gridApi = gridApi;
+      $scope.gridApi.grid.registerRowsProcessor( $scope.singleFilter, 200 );
+  },
+  columnDefs: [
+      { field:'id', displayName: 'Id'},    
+      { field:'name', displayName: 'Name'},
+      { field:'phone', displayName: 'Phone'},
+      { field:'address.city', displayName: 'City'},
+      { field:'address.address_line1', displayName: 'Address 1'},
+      { field:'address.address_line2', displayName: 'Address 2'},
+      { field:'address.postal_code', displayName: 'Postal Code'}
+    ]
+  };
 
-   $scope.gridOptions.data = data;
+  $scope.gridOptions.data = data;
 
-    $scope.filter = function() {
-      $scope.gridApi.grid.refresh();
-    };
-      
-    $scope.singleFilter = function( renderableRows ){
-      var matcher = new RegExp($scope.filterValue);
-      renderableRows.forEach( function( row ) {
-        var match = false;
-        [ 'name', 'city' ].forEach(function( field ){
-          if ((field == "name") && (row.entity[field].match(matcher))){
-            match = true;
-          }
-          else if((field == "city") && row.entity.address[field].match(matcher)) {
-            match = true;
-          }
-        });
-        if ( !match ){
-          row.visible = false;
-        }
-      });
-      return renderableRows;
-    };
+  $scope.filter = function() {
+    $scope.gridApi.grid.refresh();
+  };
+
+  $scope.singleFilter = function( renderableRows ){
+  var matcher = new RegExp($scope.filterValue);
+  renderableRows.forEach( function( row ) {
+    var match = false;
+    [ 'name', 'city' ].forEach(function( field ){
+      if ((field == "name") && (row.entity[field].match(matcher))){
+        match = true;
+      }
+      else if((field == "city") && row.entity.address[field].match(matcher)) {
+        match = true;
+      }
+    });
+    if ( !match ){
+      row.visible = false;
+    }
+  });
+   return renderableRows;
+  };
+
+  $scope.addRowPopup = function(){
+    var modalInstance = $modal.open({
+      templateUrl: 'addEmployee.html',
+      controller: 'addEmpCtrl'
+    });
+  };
 
 }]);
 
